@@ -10,31 +10,33 @@
 <ion-content padding class="message bye-ionic">
 
   <ion-item>
-    <ion-label>P1 Human <b>{{ this.chifoumi.score1 }}</b></ion-label>
-    <ion-label>P2 Computer <b>{{ this.chifoumi.score2 }}</b></ion-label>
+    <h1>{{ this.getLabelGameResult() }}</h1>
   </ion-item>
 
   <ion-item>
-  <b>{{ this.getLabelPlayerGame(this.player1Game) }} </b> VS <b> {{ this.getLabelPlayerGame(this.player2Game) }}</b><br>
-  <b>{{ this.getLabelGameResult() }}</b>
+    <ion-label>P1 Human <b>{{ this.chifoumi.score1 }}</b>
+      <div *ngIf="this.player1Game != -1">
+        <img src = "{{ this.getSrcImgPlayer1Game(this.player1Game) }}"/>
+      </div>
+    </ion-label>
+
+    <ion-label>P2 Computer <b>{{ this.chifoumi.score2 }}</b>
+      <div *ngIf="this.player1Game != -1">
+         <img src = "{{ this.getSrcImgPlayer2Game(this.player2Game) }}"/><br>
+      </div>
+    </ion-label>
   </ion-item>
+
   <br>
   <div class="button-bar">
-    <button ion-button (click)="rockEvent()">
-      Rock
-    </button>
+    <img src="{{ this.getSrcImgRock() }}" alt="" title="" (click)="rockEvent()"/>
 
-    <button ion-button (click)="paperEvent()">
-      Paper
-    </button>
+    <img src="{{ this.getSrcImgPaper() }}" alt="" title="" (click)="paperEvent()" />
 
-    <button ion-button (click)="scissorsEvent()">
-      Scissors
-    </button>
+    <img src="{{ this.getSrcImgScissors() }}" alt="" title="" (click)="scissorsEvent()" />
   </div>
   <button ion-button color="secondary" (click)="resetEvent()">
     New Game
   </button>
 
-  <img src = "{{this.getMediaURL('pic/chifoumi.jpg')}}"/>
 </ion-content>

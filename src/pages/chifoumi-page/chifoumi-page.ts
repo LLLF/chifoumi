@@ -6,7 +6,7 @@ import {
     PLAYER_DRAW
 } from "../../services/chifoumi";
 import {Platform} from "ionic-angular/index";
-import { MediaPlugin } from 'ionic-native';
+//import { MediaPlugin } from 'ionic-native';
 
 @Component({
   templateUrl: 'chifoumi-page.html',
@@ -65,10 +65,10 @@ export class chifoumiPage {
   getLabelGameResult() {
     switch (this.gameResult) {
       case PLAYER1_WIN :
-        if (this.platform.is('android'))new MediaPlugin(this.getMediaURL('sound/win.wav')).play();
+        //if (this.platform.is('android'))new MediaPlugin(this.getMediaURL('sound/win.wav')).play();
         return 'Player 1 win';
       case PLAYER2_WIN :
-        if (this.platform.is('android'))new MediaPlugin(this.getMediaURL('sound/loose.wav')).play();
+        //if (this.platform.is('android'))new MediaPlugin(this.getMediaURL('sound/loose.wav')).play();
         return 'Player 2 win';
       case PLAYER_DRAW :
         return 'Draw';
@@ -76,15 +76,35 @@ export class chifoumiPage {
     return 'Play the game';
   }
 
-  getLabelPlayerGame(playerGame: number) {
+  getSrcImgPlayer1Game(playerGame: number) {
     switch (playerGame) {
       case GAME_SCISSORS :
-        return 'SCISSORS';
+        return this.getMediaURL('pic/scissors_p1.jpg');
       case GAME_PAPER :
-        return 'PAPER';
+        return this.getMediaURL('pic/paper_p1.jpg');
       case GAME_ROCK :
-        return 'ROCK';
+        return this.getMediaURL('pic/rock_p1.jpg');
     }
-    return 'XXX';
+  }
+
+  getSrcImgPlayer2Game(playerGame: number) {
+    switch (playerGame) {
+      case GAME_SCISSORS :
+        return this.getMediaURL('pic/scissors_p2.jpg');
+      case GAME_PAPER :
+        return this.getMediaURL('pic/paper_p2.jpg');
+      case GAME_ROCK :
+        return this.getMediaURL('pic/rock_p2.jpg');
+    }
+  }
+
+  getSrcImgRock() {
+    return this.getMediaURL('pic/rock_button.jpg');
+  }
+  getSrcImgPaper() {
+    return this.getMediaURL('pic/paper_button.jpg');
+  }
+  getSrcImgScissors() {
+    return this.getMediaURL('pic/scissors_button.jpg');
   }
 }
