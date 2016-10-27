@@ -1,9 +1,9 @@
-const GAME_ROCK = 0;
-const GAME_SCISSORS = 1;
-const GAME_PAPER = 2;
-const PLAYER1_WIN = 0;
-const PLAYER2_WIN = 1;
-const PLAYER_DRAW = 2;
+export const GAME_ROCK = 0;
+export const GAME_SCISSORS = 1;
+export const GAME_PAPER = 2;
+export const PLAYER1_WIN = 0;
+export const PLAYER2_WIN = 1;
+export const PLAYER_DRAW = 2;
 
 export class chifoumi {
 

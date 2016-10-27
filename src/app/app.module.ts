@@ -1,7 +1,8 @@
-import { NgModule }                        from '@angular/core';
-import { IonicApp, IonicModule }           from 'ionic-angular';
-import { ClickerApp }                      from './app.component';
-import { PagesModule, Page2 }              from '../pages';
+import { NgModule } from '@angular/core';
+import { IonicApp, IonicModule } from 'ionic-angular';
+import { ClickerApp } from './app.component';
+import { PagesModule } from '../pages';
+import { chifoumiPage } from "../pages/chifoumi-page/chifoumi-page";
 
 @NgModule({
   declarations: [
@@ -14,7 +15,7 @@ import { PagesModule, Page2 }              from '../pages';
   bootstrap: [IonicApp],
   entryComponents: [
     ClickerApp,
-    Page2,
+    chifoumiPage,
   ],
   providers: [ ],
 })

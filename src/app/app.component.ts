@@ -1,7 +1,7 @@
-import { Component, ViewChild }          from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Platform, MenuController, Nav } from 'ionic-angular';
-import { Page2 }                         from '../pages';
-import { environment }                   from '../environments/environment';
+import { environment } from '../environments/environment';
+import {chifoumiPage} from "../pages/chifoumi-page/chifoumi-page";
 
 @Component({
   templateUrl: 'app.html',
@@ -20,12 +20,12 @@ export class ClickerApp {
     this.platform = platform;
     this.menu = menu;
 
-    this.rootPage = Page2;
+    this.rootPage = chifoumiPage;
     this.initializeApp();
 
     // set our app's pages
     this.pages = [
-      { title: 'Goodbye Ionic', component: Page2 },
+      { title: 'chifoumi', component: chifoumiPage },
     ];
   }
 

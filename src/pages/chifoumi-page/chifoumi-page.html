@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{title}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding class="message bye-ionic">
+
+  <ion-item>
+    <ion-label>P1 Human <b>{{ this.chifoumi.score1 }}</b></ion-label>
+    <ion-label>P2 Computer <b>{{ this.chifoumi.score2 }}</b></ion-label>
+  </ion-item>
+
+  <ion-item>
+  <b>{{ this.getLabelPlayerGame(this.player1Game) }} </b> VS <b> {{ this.getLabelPlayerGame(this.player2Game) }}</b><br>
+  <b>{{ this.getLabelGameResult() }}</b>
+  </ion-item>
+  <br>
+  <div class="button-bar">
+    <button ion-button (click)="rockEvent()">
+      Rock
+    </button>
+
+    <button ion-button (click)="paperEvent()">
+      Paper
+    </button>
+
+    <button ion-button (click)="scissorsEvent()">
+      Scissors
+    </button>
+  </div>
+  <button ion-button color="secondary" (click)="resetEvent()">
+    New Game
+  </button>
+
+  <img src = "{{this.getMediaURL('pic/chifoumi.jpg')}}"/>
+</ion-content>

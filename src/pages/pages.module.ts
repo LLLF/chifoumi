@@ -1,14 +1,14 @@
-import { NgModule }           from '@angular/core';
-import { IonicModule }        from 'ionic-angular';
-import { Page2 }              from './';
+import { NgModule } from '@angular/core';
+import { IonicModule } from 'ionic-angular';
+import { chifoumiPage } from "./chifoumi-page/chifoumi-page";
 
 @NgModule({
   declarations: [
-    Page2,
+    chifoumiPage,
   ],
   imports: [ IonicModule ],
   exports: [
-    Page2,
+    chifoumiPage,
   ],
   entryComponents: [],
   providers: [ ],

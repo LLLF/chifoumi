@@ -1,2 +1,2 @@
-export * from './page2/page2';
+export * from './chifoumi-page/chifoumi-page';
 export * from './pages.module';
