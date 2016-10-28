@@ -6,6 +6,7 @@ import {
     PLAYER_DRAW
 } from "../../services/chifoumi";
 import {Platform} from "ionic-angular/index";
+import Timer = NodeJS.Timer;
 //import { MediaPlugin } from 'ionic-native';
 
 @Component({
@@ -19,8 +20,14 @@ export class chifoumiPage {
   player1Game: number;
   player2Game: number;
 
+  //use for computer vs computer
+  computerGameIntervalId: Timer;
+  computerActionButtonLabel: string;
+
   constructor(private platform: Platform) {
     this.chifoumi = new chifoumi();
+    this.computerGameIntervalId = null;
+    this.computerActionButtonLabel = "Computer vs computer";
     this.resetEvent();
   }
 
@@ -34,6 +41,7 @@ export class chifoumiPage {
     this.player1Game = GAME_SCISSORS;
     this.player2Game = this.chifoumi.getRandomGame();
     this.gameResult = this.chifoumi.play(GAME_SCISSORS, this.player2Game);
+    this.computerActionButtonLabel = "Computer vs computer";
   }
 
   rockEvent() {
@@ -106,5 +114,28 @@ export class chifoumiPage {
   }
   getSrcImgScissors() {
     return this.getMediaURL('pic/scissors_button.jpg');
+  }
+
+  /**
+   * Start or Stop a computer vs computer game
+   */
+  computerEvent() {
+
+    if (this.computerGameIntervalId == null) {  // Start game computer VS computer
+
+      this.resetEvent();
+      this.computerActionButtonLabel = "STOP";
+      this.computerGameIntervalId = setInterval(() => {
+        this.player1Game = this.chifoumi.getRandomGame();
+        this.player2Game = this.chifoumi.getRandomGame();
+        this.gameResult = this.chifoumi.play(this.player1Game, this.player2Game);
+      }, 2000);
+
+    } else {  // Stop the computer vs computer game
+      clearInterval(this.computerGameIntervalId);
+      this.computerGameIntervalId = null;
+      this.computerActionButtonLabel = "Computer vs computer";
+      this.resetEvent();
+    }
   }
 }

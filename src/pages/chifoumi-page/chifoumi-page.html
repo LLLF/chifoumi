@@ -14,13 +14,13 @@
   </ion-item>
 
   <ion-item>
-    <ion-label>P1 Human <b>{{ this.chifoumi.score1 }}</b>
-      <div *ngIf="this.player1Game != -1">
+    <ion-label>{{ this.computerGameIntervalId == null ? "Human" : "Computer" }} <b>{{ this.chifoumi.score1 }}</b>
+      <div *ngIf="this.player1Game != -1">  <!-- game result displayed only if there is a game -->
         <img src = "{{ this.getSrcImgPlayer1Game(this.player1Game) }}"/>
       </div>
     </ion-label>
 
-    <ion-label>P2 Computer <b>{{ this.chifoumi.score2 }}</b>
+    <ion-label>Computer <b>{{ this.chifoumi.score2 }}</b>
       <div *ngIf="this.player1Game != -1">
          <img src = "{{ this.getSrcImgPlayer2Game(this.player2Game) }}"/><br>
       </div>
@@ -28,15 +28,18 @@
   </ion-item>
 
   <br>
-  <div class="button-bar">
+  <div *ngIf="this.computerGameIntervalId == null" class="button-bar">  <!-- displayed only if human game -->
     <img src="{{ this.getSrcImgRock() }}" alt="" title="" (click)="rockEvent()"/>
 
     <img src="{{ this.getSrcImgPaper() }}" alt="" title="" (click)="paperEvent()" />
 
     <img src="{{ this.getSrcImgScissors() }}" alt="" title="" (click)="scissorsEvent()" />
+    <button ion-button color="secondary" (click)="resetEvent()">
+      New Game
+    </button>
   </div>
-  <button ion-button color="secondary" (click)="resetEvent()">
-    New Game
+
+  <button ion-button color="secondary" (click)="computerEvent()" [innerText]="this.computerActionButtonLabel">
   </button>
 
 </ion-content>
