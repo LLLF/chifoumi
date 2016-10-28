@@ -6,7 +6,7 @@ import {chifoumiPage} from "../pages/chifoumi-page/chifoumi-page";
 @Component({
   templateUrl: 'app.html',
 })
-export class ClickerApp {
+export class MyApp {
 
   @ViewChild(Nav) public nav: Nav;
 

@@ -1,20 +1,20 @@
 import { NgModule } from '@angular/core';
 import { IonicApp, IonicModule } from 'ionic-angular';
-import { ClickerApp } from './app.component';
+import { MyApp } from './app.component';
 import { PagesModule } from '../pages';
 import { chifoumiPage } from "../pages/chifoumi-page/chifoumi-page";
 
 @NgModule({
   declarations: [
-    ClickerApp,
+    MyApp,
   ],
   imports: [
     PagesModule,
-    IonicModule.forRoot(ClickerApp),
+    IonicModule.forRoot(MyApp),
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    ClickerApp,
+    MyApp,
     chifoumiPage,
   ],
   providers: [ ],
