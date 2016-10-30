@@ -29,17 +29,17 @@
 
   <br>
   <div *ngIf="this.computerGameIntervalId == null" class="button-bar">  <!-- displayed only if human game -->
-    <img src="{{ this.getSrcImgRock() }}" alt="" title="" (click)="rockEvent()"/>
+    <img class="button_rock" src="{{ this.getSrcImgRock() }}" alt="" title="" (click)="rockEvent()"/>
 
-    <img src="{{ this.getSrcImgPaper() }}" alt="" title="" (click)="paperEvent()" />
+    <img class="button.paper" src="{{ this.getSrcImgPaper() }}" alt="" title="" (click)="paperEvent()" />
 
-    <img src="{{ this.getSrcImgScissors() }}" alt="" title="" (click)="scissorsEvent()" />
-    <button ion-button color="secondary" (click)="resetEvent()">
+    <img class="button.scissors" src="{{ this.getSrcImgScissors() }}" alt="" title="" (click)="scissorsEvent()" />
+    <button class="button_new_game" ion-button color="secondary" (click)="resetEvent()">
       New Game
     </button>
   </div>
 
-  <button ion-button color="secondary" (click)="computerEvent()" [innerText]="this.computerActionButtonLabel">
+  <button ion-button color="secondary" class="button_computer_vs_computer" (click)="computerEvent()" [innerText]="this.computerActionButtonLabel">
   </button>
 
 </ion-content>

@@ -55,6 +55,10 @@ export class PlatformMock {
       resolve();
     });
   }
+
+  public is(platform: string) {
+    return false;
+  }
 }
 
 export class MenuMock {
