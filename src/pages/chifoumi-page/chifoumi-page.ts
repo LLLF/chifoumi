@@ -7,7 +7,9 @@ import {
 } from "../../services/chifoumi";
 import {Platform} from "ionic-angular/index";
 import Timer = NodeJS.Timer;
-//import { MediaPlugin } from 'ionic-native';
+import { MediaPlugin } from 'ionic-native';
+
+const computerGameDelay: number = 2000;
 
 @Component({
   templateUrl: 'chifoumi-page.html',
@@ -16,18 +18,35 @@ import Timer = NodeJS.Timer;
 export class chifoumiPage {
   
   chifoumi: chifoumi;
-  gameResult: number;
-  player1Game: number;
-  player2Game: number;
+  gameResult: number = -1;
+  player1Game: number = -1;
+  player2Game: number = -1;
+  labelGameResult: string = '';
+  mediaWinner: MediaPlugin = null;
+  srcImgRock: string;
+  srcImgPaper: string;
+  srcImgScissors: string;
+  srcImgPlayer1Game: string;
+  srcImgPlayer2Game: string;
 
   //use for computer vs computer
-  computerGameIntervalId: Timer;
-  computerActionButtonLabel: string;
+  computerGameIntervalId: Timer = null;
+  computerActionButtonLabel: string = "Computer vs computer";
 
   constructor(private platform: Platform) {
     this.chifoumi = new chifoumi();
-    this.computerGameIntervalId = null;
-    this.computerActionButtonLabel = "Computer vs computer";
+    if (this.platform.is('android')) {
+      this.platform.ready().then(() => {
+        this.mediaWinner = new MediaPlugin(this.getMediaURL('sound/win.wav'));
+        console.log('media ok');
+      }).catch(err=> {
+        console.log(err);
+      });
+    }
+    this.srcImgRock = this.getMediaURL('pic/rock_button.jpg');
+    this.srcImgPaper = this.getMediaURL('pic/paper_button.jpg');
+    this.srcImgScissors = this.getMediaURL('pic/scissors_button.jpg');
+    this.initLabelGameResult();
     this.resetEvent();
   }
 
@@ -37,25 +56,55 @@ export class chifoumiPage {
     return;
   }
 
+  playWinnerSound() {
+    this.platform.ready().then(() => {
+      this.mediaWinner.play();
+    }).catch(err=> {
+      console.log(err);
+    });
+  }
+
   scissorsEvent() {
     this.player1Game = GAME_SCISSORS;
     this.player2Game = this.chifoumi.getRandomGame();
     this.gameResult = this.chifoumi.play(GAME_SCISSORS, this.player2Game);
+    this.initSrcImgPlayer1Game();
+    this.initSrcImgPlayer2Game();
+    this.initLabelGameResult();
     this.computerActionButtonLabel = "Computer vs computer";
+    this.initLabelGameResult();
+    if (this.platform.is('android') && (this.gameResult == PLAYER1_WIN) && (this.mediaWinner != null) ) {
+      this.playWinnerSound();
+    }
   }
-
+  
   rockEvent() {
     this.player1Game = GAME_ROCK;
     this.player2Game = this.chifoumi.getRandomGame();
     this.gameResult = this.chifoumi.play(GAME_ROCK, this.player2Game);
+    this.initSrcImgPlayer1Game();
+    this.initSrcImgPlayer2Game();
+    this.initLabelGameResult();
+    if (this.platform.is('android') && (this.gameResult == PLAYER1_WIN) && (this.mediaWinner != null) ) {
+      this.playWinnerSound();
+    }
   }
 
   paperEvent() {
     this.player1Game = GAME_PAPER;
     this.player2Game = this.chifoumi.getRandomGame();
     this.gameResult = this.chifoumi.play(GAME_PAPER, this.player2Game);
+    this.initSrcImgPlayer1Game();
+    this.initSrcImgPlayer2Game();
+    this.initLabelGameResult();
+    if (this.platform.is('android') && (this.gameResult == PLAYER1_WIN) && (this.mediaWinner != null) ) {
+      this.playWinnerSound();
+    }
   }
 
+  /*
+   * resetEvent -> the game
+   */
   resetEvent() {
     this.chifoumi.resetGame();
     this.gameResult = -1;
@@ -63,6 +112,9 @@ export class chifoumiPage {
     this.player2Game = -1;
   }
 
+  /*
+   * set the media URL switch the platform
+   */
   getMediaURL(mediaPath) {
     if (this.platform.is('android')) {
       return "/android_asset/www/assets/" + mediaPath;
@@ -70,51 +122,58 @@ export class chifoumiPage {
     return "../../assets/" + mediaPath;
   }
 
-  getLabelGameResult() {
+  /*
+   * init the game label
+   */
+  initLabelGameResult() {
+    this.labelGameResult = 'Play the game';
     switch (this.gameResult) {
       case PLAYER1_WIN :
-        //if (this.platform.is('android'))new MediaPlugin(this.getMediaURL('sound/win.wav')).play();
-        return 'Player 1 win';
+        this.labelGameResult = 'Player 1 win';
+        break;
       case PLAYER2_WIN :
-        //if (this.platform.is('android'))new MediaPlugin(this.getMediaURL('sound/loose.wav')).play();
-        return 'Player 2 win';
+        this.labelGameResult = 'Player 2 win';
+        break;
       case PLAYER_DRAW :
-        return 'Draw';
+        this.labelGameResult = 'Draw';
+        break;
     }
-    return 'Play the game';
   }
 
-  getSrcImgPlayer1Game(playerGame: number) {
-    switch (playerGame) {
+  /*
+   * init path of player1 game
+   */
+  initSrcImgPlayer1Game() {
+    switch (this.player1Game) {
       case GAME_SCISSORS :
-        return this.getMediaURL('pic/scissors_p1.jpg');
+        this.srcImgPlayer1Game = this.getMediaURL('pic/scissors_p1.jpg');
+        break;
       case GAME_PAPER :
-        return this.getMediaURL('pic/paper_p1.jpg');
+        this.srcImgPlayer1Game = this.getMediaURL('pic/paper_p1.jpg');
+        break;
       case GAME_ROCK :
-        return this.getMediaURL('pic/rock_p1.jpg');
+        this.srcImgPlayer1Game = this.getMediaURL('pic/rock_p1.jpg');
+        break;
     }
   }
 
-  getSrcImgPlayer2Game(playerGame: number) {
-    switch (playerGame) {
+  /*
+   * init path of player2 game
+   */
+  initSrcImgPlayer2Game() {
+    switch (this.player2Game) {
       case GAME_SCISSORS :
-        return this.getMediaURL('pic/scissors_p2.jpg');
+        this.srcImgPlayer2Game = this.getMediaURL('pic/scissors_p1.jpg');
+        break;
       case GAME_PAPER :
-        return this.getMediaURL('pic/paper_p2.jpg');
+        this.srcImgPlayer2Game = this.getMediaURL('pic/paper_p1.jpg');
+        break;
       case GAME_ROCK :
-        return this.getMediaURL('pic/rock_p2.jpg');
+        this.srcImgPlayer2Game = this.getMediaURL('pic/rock_p1.jpg');
+        break;
     }
   }
 
-  getSrcImgRock() {
-    return this.getMediaURL('pic/rock_button.jpg');
-  }
-  getSrcImgPaper() {
-    return this.getMediaURL('pic/paper_button.jpg');
-  }
-  getSrcImgScissors() {
-    return this.getMediaURL('pic/scissors_button.jpg');
-  }
 
   /**
    * Start or Stop a computer vs computer game
@@ -129,7 +188,10 @@ export class chifoumiPage {
         this.player1Game = this.chifoumi.getRandomGame();
         this.player2Game = this.chifoumi.getRandomGame();
         this.gameResult = this.chifoumi.play(this.player1Game, this.player2Game);
-      }, 2000);
+        this.initSrcImgPlayer1Game();
+        this.initSrcImgPlayer2Game();
+        this.initLabelGameResult();
+      }, computerGameDelay);
 
     } else {  // Stop the computer vs computer game
       clearInterval(this.computerGameIntervalId);

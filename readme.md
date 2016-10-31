@@ -18,6 +18,15 @@ Rock–paper–scissors is a zero-sum hand game usually played between two peopl
 - ionic emulate android
 - cordova run android --list
 - cordova run android --device
+You can add additional flags when using  ionic run.
+
+-c will show console logs.
+-s will show server logs.
+-l will perform live reload of the application when code changes.
+So you can use something like ionic run android -cls
+
+Note that for livereload to work if the device is not connected directly make sure its in the same network as the serving device. Make sure to serve to a local IP address in this case (you can use ionic address to change that).
+
 
 ## Unit tests
 - npm test
@@ -27,6 +36,7 @@ Rock–paper–scissors is a zero-sum hand game usually played between two peopl
 http://www.dailymotion.com/video/x16thfp_robot-imbattable-a-pierre-feuille-ciseaux_tech
 http://ionicframework.com/docs/v2/
 http://boulette.fr/jeu-Pierre-Feuille-Ciseaux-7551.html
+https://developers.google.com/web/tools/chrome-devtools/remote-debugging/
 
 
 

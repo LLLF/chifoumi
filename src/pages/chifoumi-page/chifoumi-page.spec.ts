@@ -21,7 +21,7 @@ describe('Pages: chifoumiPage', () => {
     TestUtils.configureIonicTestingModule([chifoumiPage]);
     fixture = TestBed.createComponent(chifoumiPage);
     instance = fixture.debugElement.componentInstance;
-    element = fixture.debugElement.nativeElement;
+    element = fixture.debugElement.nativeElement; 
   });
 
   it('should create chifoumiPage', async(() => {
