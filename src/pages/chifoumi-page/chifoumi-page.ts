@@ -9,7 +9,23 @@ import {Platform} from "ionic-angular/index";
 import Timer = NodeJS.Timer;
 import { MediaPlugin } from 'ionic-native';
 
-const computerGameDelay: number = 2000;
+const COMPUTER_GAME_DELAY = 2000;
+const LABEL_BUTTON_COMPUTER_VS_COMPUTER = "Computer vs computer";
+const LABEL_BUTTON_STOP = "STOP";
+const LABEL_GAME_RESULT_PLAY_THE_GAME = 'Play the game';
+const LABEL_GAME_RESULT_PLAYER1_WIN = 'Player 1 win';
+const LABEL_GAME_RESULT_PLAYER2_WIN = 'Player 2 win';
+const LABEL_GAME_RESULT_DRAW = 'Draw';
+const SRC_PIC_ROCK_BUTTON = 'pic/rock_button.jpg';
+const SRC_PIC_PAPER_BUTTON = 'pic/paper_button.jpg';
+const SRC_PIC_SCISSORS_BUTTON = 'pic/scissors_button.jpg';
+const SRC_PIC_PLAYER2_GAME_SCISSORS = 'pic/scissors_p2.jpg';
+const SRC_PIC_PLAYER2_GAME_PAPER = 'pic/paper_p2.jpg';
+const SRC_PIC_PLAYER2_GAME_ROCK = 'pic/rock_p2.jpg';
+const SRC_PIC_PLAYER1_GAME_SCISSORS = 'pic/scissors_p1.jpg';
+const SRC_PIC_PLAYER1_GAME_PAPER = 'pic/paper_p1.jpg';
+const SRC_PIC_PLAYER1_GAME_ROCK = 'pic/rock_p1.jpg';
+const SRC_WAV_WIN = 'sound/win.wav';
 
 @Component({
   templateUrl: 'chifoumi-page.html',
@@ -31,21 +47,21 @@ export class chifoumiPage {
 
   //use for computer vs computer
   computerGameIntervalId: Timer = null;
-  computerActionButtonLabel: string = "Computer vs computer";
+  computerActionButtonLabel: string = LABEL_BUTTON_COMPUTER_VS_COMPUTER;
 
   constructor(private platform: Platform) {
     this.chifoumi = new chifoumi();
     if (this.platform.is('android')) {
       this.platform.ready().then(() => {
-        this.mediaWinner = new MediaPlugin(this.getMediaURL('sound/win.wav'));
-        console.log('media ok');
+        this.mediaWinner = new MediaPlugin(this.getMediaURL(SRC_WAV_WIN));
       }).catch(err=> {
         console.log(err);
       });
     }
-    this.srcImgRock = this.getMediaURL('pic/rock_button.jpg');
-    this.srcImgPaper = this.getMediaURL('pic/paper_button.jpg');
-    this.srcImgScissors = this.getMediaURL('pic/scissors_button.jpg');
+    
+    this.srcImgRock = this.getMediaURL(SRC_PIC_ROCK_BUTTON);
+    this.srcImgPaper = this.getMediaURL(SRC_PIC_PAPER_BUTTON);
+    this.srcImgScissors = this.getMediaURL(SRC_PIC_SCISSORS_BUTTON);
     this.initLabelGameResult();
     this.resetEvent();
   }
@@ -71,7 +87,7 @@ export class chifoumiPage {
     this.initSrcImgPlayer1Game();
     this.initSrcImgPlayer2Game();
     this.initLabelGameResult();
-    this.computerActionButtonLabel = "Computer vs computer";
+    this.computerActionButtonLabel = LABEL_BUTTON_COMPUTER_VS_COMPUTER;
     this.initLabelGameResult();
     if (this.platform.is('android') && (this.gameResult == PLAYER1_WIN) && (this.mediaWinner != null) ) {
       this.playWinnerSound();
@@ -126,16 +142,16 @@ export class chifoumiPage {
    * init the game label
    */
   initLabelGameResult() {
-    this.labelGameResult = 'Play the game';
+    this.labelGameResult = LABEL_GAME_RESULT_PLAY_THE_GAME;
     switch (this.gameResult) {
       case PLAYER1_WIN :
-        this.labelGameResult = 'Player 1 win';
+        this.labelGameResult = LABEL_GAME_RESULT_PLAYER1_WIN;
         break;
       case PLAYER2_WIN :
-        this.labelGameResult = 'Player 2 win';
+        this.labelGameResult = LABEL_GAME_RESULT_PLAYER2_WIN;
         break;
       case PLAYER_DRAW :
-        this.labelGameResult = 'Draw';
+        this.labelGameResult = LABEL_GAME_RESULT_DRAW;
         break;
     }
   }
@@ -146,13 +162,13 @@ export class chifoumiPage {
   initSrcImgPlayer1Game() {
     switch (this.player1Game) {
       case GAME_SCISSORS :
-        this.srcImgPlayer1Game = this.getMediaURL('pic/scissors_p1.jpg');
+        this.srcImgPlayer1Game = this.getMediaURL(SRC_PIC_PLAYER1_GAME_SCISSORS);
         break;
       case GAME_PAPER :
-        this.srcImgPlayer1Game = this.getMediaURL('pic/paper_p1.jpg');
+        this.srcImgPlayer1Game = this.getMediaURL(SRC_PIC_PLAYER1_GAME_PAPER);
         break;
       case GAME_ROCK :
-        this.srcImgPlayer1Game = this.getMediaURL('pic/rock_p1.jpg');
+        this.srcImgPlayer1Game = this.getMediaURL(SRC_PIC_PLAYER1_GAME_ROCK);
         break;
     }
   }
@@ -163,13 +179,13 @@ export class chifoumiPage {
   initSrcImgPlayer2Game() {
     switch (this.player2Game) {
       case GAME_SCISSORS :
-        this.srcImgPlayer2Game = this.getMediaURL('pic/scissors_p1.jpg');
+        this.srcImgPlayer2Game = this.getMediaURL(SRC_PIC_PLAYER2_GAME_SCISSORS);
         break;
       case GAME_PAPER :
-        this.srcImgPlayer2Game = this.getMediaURL('pic/paper_p1.jpg');
+        this.srcImgPlayer2Game = this.getMediaURL(SRC_PIC_PLAYER2_GAME_PAPER);
         break;
       case GAME_ROCK :
-        this.srcImgPlayer2Game = this.getMediaURL('pic/rock_p1.jpg');
+        this.srcImgPlayer2Game = this.getMediaURL(SRC_PIC_PLAYER2_GAME_ROCK);
         break;
     }
   }
@@ -183,7 +199,7 @@ export class chifoumiPage {
     if (this.computerGameIntervalId == null) {  // Start game computer VS computer
 
       this.resetEvent();
-      this.computerActionButtonLabel = "STOP";
+      this.computerActionButtonLabel = LABEL_BUTTON_STOP;
       this.computerGameIntervalId = setInterval(() => {
         this.player1Game = this.chifoumi.getRandomGame();
         this.player2Game = this.chifoumi.getRandomGame();
@@ -191,13 +207,14 @@ export class chifoumiPage {
         this.initSrcImgPlayer1Game();
         this.initSrcImgPlayer2Game();
         this.initLabelGameResult();
-      }, computerGameDelay);
+      }, COMPUTER_GAME_DELAY);
 
     } else {  // Stop the computer vs computer game
       clearInterval(this.computerGameIntervalId);
       this.computerGameIntervalId = null;
-      this.computerActionButtonLabel = "Computer vs computer";
+      this.computerActionButtonLabel = LABEL_BUTTON_COMPUTER_VS_COMPUTER;
       this.resetEvent();
+      this.initLabelGameResult();
     }
   }
 }
